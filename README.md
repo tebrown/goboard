@@ -1,6 +1,6 @@
 # Linux/Mac VHDL for GoBoard
 
-This is a template for building VHDL for the excellent [NAND LAND Go Board] (https://nandland.com/the-go-board/)
+This is a template for building VHDL for the excellent [NAND LAND Go Board](https://nandland.com/the-go-board/)
 
 
 References
