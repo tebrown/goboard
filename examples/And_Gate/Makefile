@@ -1,5 +1,5 @@
 # Package Name
-PACKNAME  = !package_name!
+PACKNAME  = And_Gate
 
 # Use local tools
 #GHDL      = ghdl
@@ -36,7 +36,7 @@ all: $(PACKNAME).bin
 
 $(PACKNAME).json: $(PACKNAME).vhdl
 	$(GHDL) -a --std=08 $<
-	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) $(PACKNAME); synth_ice40 -json $@"
+	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) And_Gate; synth_ice40 -json $@"
 
 $(PACKNAME).asc: $(PACKNAME).json $(LPF)
 	$(NEXTPNR) --hx1k --json $< $(FREQ) --pcf $(PCF) --pcf-allow-unconstrained --package $(PACKAGE) --asc $@
