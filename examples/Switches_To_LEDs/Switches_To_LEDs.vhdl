@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity toplevel is
+entity Switches_To_LEDs is
     port(
         i_Switch_1 : in std_logic;
         i_Switch_2 : in std_logic;
@@ -12,9 +12,9 @@ entity toplevel is
         o_LED_3    : out std_logic;
         o_LED_4    : out std_logic
         );
-end entity toplevel;
+end entity Switches_To_LEDs;
 
-architecture RTL of toplevel is
+architecture RTL of Switches_To_LEDs is
 begin
     o_LED_1 <= i_Switch_1; 
     o_LED_2 <= i_Switch_2; 

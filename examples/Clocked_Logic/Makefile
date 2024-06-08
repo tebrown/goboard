@@ -1,5 +1,5 @@
-#toplevel Package Name
-PACKNAME  = Switches_To_LEDs
+# Package Name
+PACKNAME  = Clocked_Logic
 
 # Use local tools
 #GHDL      = ghdl
@@ -23,6 +23,8 @@ NEXTPNR   = $(DOCKER) $(DOCKERARGS) ghdl/synth:nextpnr-ice40 nextpnr-ice40
 ICEPACK   = $(DOCKER) $(DOCKERARGS) hdlc/icestorm icepack
 ICEPROG   = iceprog
 
+            #### DO NOT MODIFY ANYTHING BELOW THIS LINE ###
+
 # GO BOARD GENERICS
 GHDL_GENERICS= #-gCLK_FREQUENCY=25000000
 PCF=constraints/goboard.pcf
@@ -34,7 +36,7 @@ all: $(PACKNAME).bin
 
 $(PACKNAME).json: $(PACKNAME).vhdl
 	$(GHDL) -a --std=08 $<
-	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) Switches_To_LEDs; synth_ice40 -json $@"
+	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) $(PACKNAME); synth_ice40 -json $@" 
 
 $(PACKNAME).asc: $(PACKNAME).json $(LPF)
 	$(NEXTPNR) --hx1k --json $< $(FREQ) --pcf $(PCF) --pcf-allow-unconstrained --package $(PACKAGE) --asc $@
@@ -46,7 +48,7 @@ prog: $(PACKNAME).bin
 	$(ICEPROG) $<
 
 clean:
-	@rm -f *.bin *.json *.config *.asc *.cf
+	@rm -f work-obj08.cf *.bit *.json *.svf *.config
 
 .PHONY: clean prog
 .PRECIOUS: $(PACKNAME).json $(PACKNAME).asc $(PACKNAME).bin

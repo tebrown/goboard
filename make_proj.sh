@@ -12,6 +12,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity $1 is
+   port (
+   );
 end entity $1;
 
 architecture RTL of $1 is
