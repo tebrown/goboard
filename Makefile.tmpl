@@ -40,7 +40,7 @@ all: $(PACKNAME).bin
 SOURCES = $(MODULES:%=%.vhdl) $(PACKNAME).vhdl
 
 $(PACKNAME).json: $(SOURCES)
-	$(GHDL) -a --std=08 $^ ${PACKNAME).vhdl
+	$(GHDL) -a --std=08 $^ $(PACKNAME).vhdl
 	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) $(SOURCES )-e $(PACKNAME); synth_ice40 -json $@"
 
 $(PACKNAME).asc: $(PACKNAME).json $(LPF)
