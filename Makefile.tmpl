@@ -1,5 +1,6 @@
 # Package Name
 PACKNAME  = !package_name!
+MODULES   = 
 
 # Use local tools
 #GHDL      = ghdl
@@ -34,9 +35,13 @@ FREQ=--freq 25
 
 all: $(PACKNAME).bin
 
-$(PACKNAME).json: $(PACKNAME).vhdl
-	$(GHDL) -a --std=08 $<
-	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) $(PACKNAME); synth_ice40 -json $@"
+# Take all out modules and append .vhdl to the module name
+# As an example, Foo will turn into Foo.vhdl
+SOURCES = $(MODULES:%=%.vhdl) $(PACKNAME).vhdl
+
+$(PACKNAME).json: $(SOURCES)
+	$(GHDL) -a --std=08 $^ ${PACKNAME).vhdl
+	$(YOSYS) -m $(GHDLSYNTH) -p "ghdl --std=08 $(GHDL_GENERICS) $(SOURCES )-e $(PACKNAME); synth_ice40 -json $@"
 
 $(PACKNAME).asc: $(PACKNAME).json $(LPF)
 	$(NEXTPNR) --hx1k --json $< $(FREQ) --pcf $(PCF) --pcf-allow-unconstrained --package $(PACKAGE) --asc $@
@@ -51,4 +56,4 @@ clean:
 	@rm -f work-obj08.cf *.bit *.json *.svf *.config
 
 .PHONY: clean prog
-.PRECIOUS: $(PACKNAME).json $(PACKNAME).asc $(PACKNAME).bin
+.PRECIOUS: *.json *.asc *.bin

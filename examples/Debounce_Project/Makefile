@@ -1,5 +1,6 @@
 # Package Name
 PACKNAME  = Clocked_Logic
+MODULES = Debounce_Switch 
 
 # Use local tools
 #GHDL      = ghdl
@@ -31,8 +32,6 @@ PCF=constraints/goboard.pcf
 PACKAGE=vq100
 DEVICE=--hx1k
 FREQ=--freq 25
-
-MODULES = Debounce_Switch 
 
 # Take all out modules and append .vhdl to the module name
 # As an example, Foo will turn into Foo.vhdl
